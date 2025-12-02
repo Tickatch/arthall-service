@@ -1,4 +1,4 @@
-package com.tickatch.projectinterface.global.domain;
+package com.tickatch.arthallservice.global.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
