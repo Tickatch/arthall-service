@@ -24,22 +24,15 @@ public class ArtHall extends AbstractAuditEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private ArtHallId id;
 
-  @Embedded
-  private ArtHallName name;
+  @Embedded private ArtHallName name;
 
-  @Embedded
-  private ArtHallAddress address;
+  @Embedded private ArtHallAddress address;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false, length = 20)
   private ArtHallStatus status;
 
-  public ArtHall(
-      ArtHallName name,
-      ArtHallAddress address,
-      ArtHallStatus status,
-      String createdBy
-  ) {
+  public ArtHall(ArtHallName name, ArtHallAddress address, ArtHallStatus status, String createdBy) {
     this.name = name;
     this.address = address;
     this.status = status;
@@ -47,14 +40,9 @@ public class ArtHall extends AbstractAuditEntity {
     createBy(createdBy);
   }
 
-  public static ArtHall register(String name, String address, ArtHallStatus status,
-      String createdBy) {
-    return new ArtHall(
-        ArtHallName.of(name),
-        ArtHallAddress.of(address),
-        status,
-        createdBy
-    );
+  public static ArtHall register(
+      String name, String address, ArtHallStatus status, String createdBy) {
+    return new ArtHall(ArtHallName.of(name), ArtHallAddress.of(address), status, createdBy);
   }
 
   public void updateInfo(String name, String address, ArtHallStatus status, String updatedBy) {
