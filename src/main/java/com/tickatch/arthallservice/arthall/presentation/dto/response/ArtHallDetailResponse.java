@@ -16,7 +16,7 @@ public record ArtHallDetailResponse(
 
   public static ArtHallDetailResponse from(ArtHall entity) {
     return new ArtHallDetailResponse(
-        entity.getId(),
+        entity.getArtHallId(),
         entity.getName().getValue(),
         entity.getAddress().getValue(),
         entity.getStatus().name(),

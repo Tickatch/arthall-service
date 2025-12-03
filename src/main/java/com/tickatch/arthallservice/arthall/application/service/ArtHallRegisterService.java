@@ -27,7 +27,7 @@ public class ArtHallRegisterService {
     ArtHall saved = artHallRepository.save(artHall);
 
     return new ArtHallResult(
-        saved.getId(),
+        saved.getArtHallId(),
         saved.getName().getValue(),
         saved.getAddress().getValue(),
         saved.getStatus().name());

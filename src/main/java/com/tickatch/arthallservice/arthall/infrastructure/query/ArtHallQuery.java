@@ -20,10 +20,13 @@ public class ArtHallQuery {
   private final JPAQueryFactory query;
 
   // 단건조회
-  public Optional<ArtHall> findDetailById(Long id) {
+  public Optional<ArtHall> findDetailByArtHallId(Long id) {
 
     ArtHall entity =
-        query.selectFrom(artHall).where(artHall.id.eq(id), artHall.deletedAt.isNull()).fetchOne();
+        query
+            .selectFrom(artHall)
+            .where(artHall.artHallId.eq(id), artHall.deletedAt.isNull())
+            .fetchOne();
 
     return Optional.ofNullable(entity);
   }

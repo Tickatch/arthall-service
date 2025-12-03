@@ -22,7 +22,7 @@ public class ArtHallStatusUpdateService {
 
     ArtHall artHall =
         artHallRepository
-            .findByIdAndDeletedAtIsNull(command.id())
+            .findByArtHallIdAndDeletedAtIsNull(command.id())
             .orElseThrow(
                 () -> new BusinessException(ArtHallErrorCode.ARTHALL_NOT_FOUND, command.id()));
 
@@ -31,7 +31,7 @@ public class ArtHallStatusUpdateService {
     artHall.changeStatus(newStatus);
 
     return new ArtHallResult(
-        artHall.getId(),
+        artHall.getArtHallId(),
         artHall.getName().getValue(),
         artHall.getAddress().getValue(),
         artHall.getStatus().name());
