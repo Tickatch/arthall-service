@@ -2,7 +2,6 @@ package com.tickatch.arthallservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  * Spring Boot 애플리케이션의 진입점 클래스.
@@ -12,7 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * @author 김형섭
  * @since 1.0.0
  */
-@EnableJpaAuditing
 @SpringBootApplication
 public class ArthallServiceApplication {
 
