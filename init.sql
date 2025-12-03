@@ -1,8 +1,9 @@
 CREATE SCHEMA IF NOT EXISTS arthall_service;
+DROP TABLE IF EXISTS arthall_service.p_arthall CASCADE;
 CREATE TABLE arthall_service.p_arthall
 (
-    id         BIGINT PRIMARY KEY,    -- ArtHallId (Long)
-    name       VARCHAR(50)  NOT NULL, -- ArtHallName
+    id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name       VARCHAR(50)  NOT NULL,
     address    VARCHAR(255) NOT NULL,
 
     status     VARCHAR(20)  NOT NULL
