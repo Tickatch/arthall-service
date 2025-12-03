@@ -3,12 +3,12 @@ package com.tickatch.arthallservice.arthall.domain;
 import com.tickatch.arthallservice.global.domain.AbstractAuditEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,9 +20,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArtHall extends AbstractAuditEntity {
 
-  @EmbeddedId
+  @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private ArtHallId id;
+  @Column(name = "id")
+  private Long id;
 
   @Embedded private ArtHallName name;
 
