@@ -32,30 +32,24 @@ public class ArtHall extends AbstractAuditEntity {
   @Column(name = "status", nullable = false, length = 20)
   private ArtHallStatus status;
 
-  public ArtHall(ArtHallName name, ArtHallAddress address, ArtHallStatus status, String createdBy) {
+  public ArtHall(ArtHallName name, ArtHallAddress address, ArtHallStatus status) {
     this.name = name;
     this.address = address;
     this.status = status;
-
-    createBy(createdBy);
   }
 
-  public static ArtHall register(
-      String name, String address, ArtHallStatus status, String createdBy) {
-    return new ArtHall(ArtHallName.of(name), ArtHallAddress.of(address), status, createdBy);
+  public static ArtHall register(String name, String address, ArtHallStatus status) {
+    return new ArtHall(ArtHallName.of(name), ArtHallAddress.of(address), status);
   }
 
-  public void updateInfo(String name, String address, ArtHallStatus status, String updatedBy) {
+  public void updateInfo(String name, String address, ArtHallStatus status) {
     this.name = ArtHallName.of(name);
     this.address = ArtHallAddress.of(address);
     this.status = status;
-
-    updateBy(updatedBy);
   }
 
-  public void changeStatus(ArtHallStatus newStatus, String updatedBy) {
+  public void changeStatus(ArtHallStatus newStatus) {
     this.status = newStatus;
-    updateBy(updatedBy);
   }
 
   public void softDelete(String deletedBy) {

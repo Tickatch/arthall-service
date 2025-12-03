@@ -17,7 +17,7 @@ import java.util.Arrays;
 class LayeredArchitectureTest {
 
   private static final String[] DOMAIN_PACKAGES = {
-    "com.tickatch.arthallservice.example.domain..",
+    "com.tickatch.arthallservice.arthall.domain..",
   };
 
   @ArchTest

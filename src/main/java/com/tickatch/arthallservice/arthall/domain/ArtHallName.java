@@ -19,13 +19,13 @@ public class ArtHallName {
   private String value;
 
   private ArtHallName(String value) {
-    if (value == null || value.isBlank()) {
-      throw new BusinessException(ArtHallErrorCode.INVALID_ARTHALL_NAME, value);
-    }
     this.value = value;
   }
 
   public static ArtHallName of(String value) {
+    if (value == null || value.isBlank()) {
+      throw new BusinessException(ArtHallErrorCode.INVALID_ARTHALL_NAME, value);
+    }
     return new ArtHallName(value);
   }
 }

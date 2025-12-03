@@ -19,13 +19,13 @@ public class ArtHallAddress {
   private String value;
 
   private ArtHallAddress(String value) {
-    if (value == null || value.isBlank()) {
-      throw new BusinessException(ArtHallErrorCode.INVALID_ARTHALL_ADDRESS, value);
-    }
     this.value = value;
   }
 
   public static ArtHallAddress of(String value) {
+    if (value == null || value.isBlank()) {
+      throw new BusinessException(ArtHallErrorCode.INVALID_ARTHALL_ADDRESS, value);
+    }
     return new ArtHallAddress(value);
   }
 }
