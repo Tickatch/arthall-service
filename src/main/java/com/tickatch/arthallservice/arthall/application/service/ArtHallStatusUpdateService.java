@@ -12,19 +12,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ArtHallUpdateService {
+public class ArtHallStatusUpdateService {
 
   private final ArtHallRepository artHallRepository;
 
   @Transactional
-  public ArtHallResult update(Long id, String name, String address, String status) {
+  public ArtHallResult updateStatus(Long id, String status) {
 
     ArtHall artHall =
         artHallRepository
             .findByIdAndDeletedAtIsNull(id)
             .orElseThrow(() -> new BusinessException(ArtHallErrorCode.ARTHALL_NOT_FOUND, id));
 
-    artHall.updateInfo(name, address, ArtHallStatus.valueOf(status));
+    ArtHallStatus newStatus = ArtHallStatus.valueOf(status);
+
+    artHall.changeStatus(newStatus);
+
+    artHallRepository.save(artHall);
 
     return new ArtHallResult(
         artHall.getId(),

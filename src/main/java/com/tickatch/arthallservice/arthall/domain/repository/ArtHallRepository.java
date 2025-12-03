@@ -7,7 +7,7 @@ public interface ArtHallRepository {
 
   ArtHall save(ArtHall artHall);
 
-  Optional<ArtHall> findActiveById(Long id);
+  Optional<ArtHall> findByIdAndDeletedAtIsNull(Long id);
 
   void delete(ArtHall artHall);
 }

@@ -3,10 +3,13 @@ package com.tickatch.arthallservice.arthall.presentation;
 import com.tickatch.arthallservice.arthall.application.dto.ArtHallResult;
 import com.tickatch.arthallservice.arthall.application.service.ArtHallDeleteService;
 import com.tickatch.arthallservice.arthall.application.service.ArtHallRegisterService;
+import com.tickatch.arthallservice.arthall.application.service.ArtHallStatusUpdateService;
 import com.tickatch.arthallservice.arthall.application.service.ArtHallUpdateService;
 import com.tickatch.arthallservice.arthall.presentation.dto.request.ArtHallRegisterRequest;
+import com.tickatch.arthallservice.arthall.presentation.dto.request.ArtHallStatusUpdateRequest;
 import com.tickatch.arthallservice.arthall.presentation.dto.request.ArtHallUpdateRequest;
 import com.tickatch.arthallservice.arthall.presentation.dto.response.ArtHallRegisterResponse;
+import com.tickatch.arthallservice.arthall.presentation.dto.response.ArtHallStatusUpdateResponse;
 import com.tickatch.arthallservice.arthall.presentation.dto.response.ArtHallUpdateResponse;
 import io.github.tickatch.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +34,7 @@ public class ArtHallController {
   private final ArtHallRegisterService artHallRegisterService;
   private final ArtHallUpdateService artHallUpdateService;
   private final ArtHallDeleteService artHallDeleteService;
+  private final ArtHallStatusUpdateService artHallStatusUpdateService;
 
   @Operation(summary = "아트홀 등록", description = "새로운 아트홀을 등록합니다.")
   @PostMapping
@@ -57,5 +61,16 @@ public class ArtHallController {
   public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
     artHallDeleteService.delete(id, "SYSTEM");
     return ResponseEntity.ok(ApiResponse.successWithMessage("아트홀이 삭제되었습니다."));
+  }
+
+  @Operation(summary = "아트홀 상태 변경", description = "아트홀 상태를 ACTIVE 또는 INACTIVE 로 변경합니다.")
+  @PostMapping("/{id}/status")
+  public ResponseEntity<ApiResponse<ArtHallStatusUpdateResponse>> updateStatus(
+      @PathVariable Long id, @Valid @RequestBody ArtHallStatusUpdateRequest request) {
+
+    ArtHallResult result = artHallStatusUpdateService.updateStatus(id, request.status());
+
+    return ResponseEntity.ok(
+        ApiResponse.success(ArtHallStatusUpdateResponse.from(result), "아트홀 상태가 변경되었습니다."));
   }
 }

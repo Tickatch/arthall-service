@@ -19,7 +19,7 @@ public class ArtHallDeleteService {
 
     ArtHall artHall =
         artHallRepository
-            .findActiveById(id)
+            .findByIdAndDeletedAtIsNull(id)
             .orElseThrow(() -> new BusinessException(ArtHallErrorCode.ARTHALL_NOT_FOUND, id));
 
     artHall.softDelete(deletedBy);
