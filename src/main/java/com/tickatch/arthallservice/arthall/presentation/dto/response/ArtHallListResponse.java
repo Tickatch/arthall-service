@@ -8,7 +8,7 @@ public record ArtHallListResponse(
 
   public static ArtHallListResponse from(ArtHall entity) {
     return new ArtHallListResponse(
-        entity.getId(),
+        entity.getArtHallId(),
         entity.getName().getValue(),
         entity.getAddress().getValue(),
         entity.getStatus().name(),

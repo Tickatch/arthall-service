@@ -23,7 +23,7 @@ public class ArtHall extends AbstractAuditEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private Long id;
+  private Long artHallId;
 
   @Embedded private ArtHallName name;
 

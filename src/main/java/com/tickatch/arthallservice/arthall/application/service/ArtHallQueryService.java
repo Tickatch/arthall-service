@@ -14,7 +14,7 @@ public class ArtHallQueryService {
   private final ArtHallFinder artHallFinder;
 
   public ArtHall getArtHallDetail(Long id) {
-    return artHallFinder.findDetailById(id);
+    return artHallFinder.findDetailByArtHallId(id);
   }
 
   public Page<ArtHall> getArtHallList(String keyword, Pageable pageable) {

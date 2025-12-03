@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ArtHallFinder {
 
-  ArtHall findDetailById(Long id);
+  ArtHall findDetailByArtHallId(Long id);
 
   Page<ArtHall> findAll(String keyword, Pageable pageable);
 }

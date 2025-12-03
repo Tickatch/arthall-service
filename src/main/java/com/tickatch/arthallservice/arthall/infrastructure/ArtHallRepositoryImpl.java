@@ -19,8 +19,8 @@ public class ArtHallRepositoryImpl implements ArtHallRepository {
   }
 
   @Override
-  public Optional<ArtHall> findByIdAndDeletedAtIsNull(Long id) {
-    return jpaRepository.findByIdAndDeletedAtIsNull(id);
+  public Optional<ArtHall> findByArtHallIdAndDeletedAtIsNull(Long id) {
+    return jpaRepository.findByArtHallIdAndDeletedAtIsNull(id);
   }
 
   @Override

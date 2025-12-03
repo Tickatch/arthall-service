@@ -17,9 +17,9 @@ public class ArtHallFinderImpl implements ArtHallFinder {
   private final ArtHallQuery artHallQuery;
 
   @Override
-  public ArtHall findDetailById(Long id) {
+  public ArtHall findDetailByArtHallId(Long id) {
     return artHallQuery
-        .findDetailById(id)
+        .findDetailByArtHallId(id)
         .orElseThrow(() -> new BusinessException(ArtHallErrorCode.ARTHALL_NOT_FOUND, id));
   }
 
