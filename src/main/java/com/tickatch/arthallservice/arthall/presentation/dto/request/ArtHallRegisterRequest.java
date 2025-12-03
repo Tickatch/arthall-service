@@ -1,6 +1,10 @@
 package com.tickatch.arthallservice.arthall.presentation.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.tickatch.arthallservice.arthall.application.dto.ArtHallRegisterCommand;
 
-public record ArtHallRegisterRequest(
-    @NotBlank String name, @NotBlank String address, @NotBlank String status) {}
+public record ArtHallRegisterRequest(String name, String address, String status) {
+
+  public ArtHallRegisterCommand toCommand() {
+    return new ArtHallRegisterCommand(name, address, status);
+  }
+}

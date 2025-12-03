@@ -1,6 +1,7 @@
 package com.tickatch.arthallservice.arthall.application.service;
 
 import com.tickatch.arthallservice.arthall.application.dto.ArtHallResult;
+import com.tickatch.arthallservice.arthall.application.dto.ArtHallStatusUpdateCommand;
 import com.tickatch.arthallservice.arthall.domain.ArtHall;
 import com.tickatch.arthallservice.arthall.domain.ArtHallStatus;
 import com.tickatch.arthallservice.arthall.domain.exception.ArtHallErrorCode;
@@ -17,18 +18,17 @@ public class ArtHallStatusUpdateService {
   private final ArtHallRepository artHallRepository;
 
   @Transactional
-  public ArtHallResult updateStatus(Long id, String status) {
+  public ArtHallResult updateStatus(ArtHallStatusUpdateCommand command) {
 
     ArtHall artHall =
         artHallRepository
-            .findByIdAndDeletedAtIsNull(id)
-            .orElseThrow(() -> new BusinessException(ArtHallErrorCode.ARTHALL_NOT_FOUND, id));
+            .findByIdAndDeletedAtIsNull(command.id())
+            .orElseThrow(
+                () -> new BusinessException(ArtHallErrorCode.ARTHALL_NOT_FOUND, command.id()));
 
-    ArtHallStatus newStatus = ArtHallStatus.valueOf(status);
+    ArtHallStatus newStatus = ArtHallStatus.valueOf(command.status());
 
     artHall.changeStatus(newStatus);
-
-    artHallRepository.save(artHall);
 
     return new ArtHallResult(
         artHall.getId(),

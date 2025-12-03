@@ -1,6 +1,8 @@
 package com.tickatch.arthallservice.arthall.presentation;
 
 import com.tickatch.arthallservice.arthall.application.dto.ArtHallResult;
+import com.tickatch.arthallservice.arthall.application.dto.ArtHallStatusUpdateCommand;
+import com.tickatch.arthallservice.arthall.application.dto.ArtHallUpdateCommand;
 import com.tickatch.arthallservice.arthall.application.service.ArtHallDeleteService;
 import com.tickatch.arthallservice.arthall.application.service.ArtHallRegisterService;
 import com.tickatch.arthallservice.arthall.application.service.ArtHallStatusUpdateService;
@@ -40,7 +42,7 @@ public class ArtHallController {
   @PostMapping
   public ResponseEntity<ApiResponse<ArtHallRegisterResponse>> register(
       @Valid @RequestBody ArtHallRegisterRequest request) {
-    ArtHallResult result = artHallRegisterService.register(request);
+    ArtHallResult result = artHallRegisterService.register(request.toCommand());
     return ResponseEntity.ok(
         ApiResponse.success(ArtHallRegisterResponse.from(result), "아트홀이 등록되었습니다."));
   }
@@ -49,8 +51,8 @@ public class ArtHallController {
   @PutMapping("/{id}")
   public ResponseEntity<ApiResponse<ArtHallUpdateResponse>> update(
       @PathVariable Long id, @Valid @RequestBody ArtHallUpdateRequest request) {
-    ArtHallResult result =
-        artHallUpdateService.update(id, request.name(), request.address(), request.status());
+    ArtHallUpdateCommand command = request.toCommand(id);
+    ArtHallResult result = artHallUpdateService.update(command);
 
     return ResponseEntity.ok(
         ApiResponse.success(ArtHallUpdateResponse.from(result), "아트홀 정보가 수정되었습니다."));
@@ -67,8 +69,8 @@ public class ArtHallController {
   @PostMapping("/{id}/status")
   public ResponseEntity<ApiResponse<ArtHallStatusUpdateResponse>> updateStatus(
       @PathVariable Long id, @Valid @RequestBody ArtHallStatusUpdateRequest request) {
-
-    ArtHallResult result = artHallStatusUpdateService.updateStatus(id, request.status());
+    ArtHallStatusUpdateCommand command = request.toCommand(id);
+    ArtHallResult result = artHallStatusUpdateService.updateStatus(command);
 
     return ResponseEntity.ok(
         ApiResponse.success(ArtHallStatusUpdateResponse.from(result), "아트홀 상태가 변경되었습니다."));
