@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArtHallJpaRepository extends JpaRepository<ArtHall, Long> {
 
-  Optional<ArtHall> findByIdAndDeletedAtIsNull(Long id);
+  Optional<ArtHall> findByArtHallIdAndDeletedAtIsNull(Long id);
 }
