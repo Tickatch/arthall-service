@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,11 +39,11 @@ public class ArtHallApi {
 
   @Operation(summary = "아트홀 등록", description = "새로운 아트홀을 등록합니다.")
   @PostMapping
-  public ResponseEntity<ApiResponse<ArtHallRegisterResponse>> register(
+  public ApiResponse<ArtHallRegisterResponse> register(
       @Valid @RequestBody ArtHallRegisterRequest request) {
     ArtHallResult result = artHallRegisterService.register(request.toCommand());
-    return ResponseEntity.ok(
-        ApiResponse.success(ArtHallRegisterResponse.from(result), "아트홀이 등록되었습니다."));
+    return
+        ApiResponse.success(ArtHallRegisterResponse.from(result), "아트홀이 등록되었습니다.");
   }
 
   @Operation(summary = "아트홀 수정", description = "아트홀 정보를 수정합니다.")
