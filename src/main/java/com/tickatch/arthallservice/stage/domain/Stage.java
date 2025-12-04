@@ -40,12 +40,12 @@ public class Stage extends AbstractAuditEntity {
     this.status = status;
   }
 
-  public static Stage register(Long artHallId, String name, StageStatus status) {
-    return new Stage(artHallId, StageName.of(name), status);
+  public static Stage register(Long artHallId, StageName name, StageStatus status) {
+    return new Stage(artHallId, name, status);
   }
 
-  public void updateInfo(String name, StageStatus status) {
-    this.name = StageName.of(name);
+  public void updateInfo(StageName name, StageStatus status) {
+    this.name = name;
     this.status = status;
   }
 
