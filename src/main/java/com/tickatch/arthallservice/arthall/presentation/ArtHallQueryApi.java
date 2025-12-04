@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/arthalls")
-public class ArtHallQueryController {
+public class ArtHallQueryApi {
 
   private final ArtHallQueryService artHallQueryService;
 
@@ -35,10 +35,10 @@ public class ArtHallQueryController {
       summary = "아트홀 목록 조회",
       description =
           """
-          아트홀 정보를 페이징 형태로 조회합니다.
-          검색어(keyword)가 있을 경우 아트홀 이름 또는 주소에 대해 부분 일치 검색을 수행하며,
-          최신 생성순(createdAt DESC)으로 정렬하여 반환합니다.
-          """)
+              아트홀 정보를 페이징 형태로 조회합니다.
+              검색어(keyword)가 있을 경우 아트홀 이름 또는 주소에 대해 부분 일치 검색을 수행하며,
+              최신 생성순(createdAt DESC)으로 정렬하여 반환합니다.
+              """)
   @GetMapping
   public PageResponse<ArtHallListResponse> getArtHalls(
       @RequestParam(required = false) String keyword, Pageable pageable) {

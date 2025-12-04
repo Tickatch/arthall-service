@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/arthalls")
-public class ArtHallController {
+public class ArtHallApi {
 
   private final ArtHallRegisterService artHallRegisterService;
   private final ArtHallUpdateService artHallUpdateService;
@@ -49,30 +49,28 @@ public class ArtHallController {
 
   @Operation(summary = "아트홀 수정", description = "아트홀 정보를 수정합니다.")
   @PutMapping("/{id}")
-  public ResponseEntity<ApiResponse<ArtHallUpdateResponse>> update(
+  public ApiResponse<ArtHallUpdateResponse> update(
       @PathVariable Long id, @Valid @RequestBody ArtHallUpdateRequest request) {
     ArtHallUpdateCommand command = request.toCommand(id);
     ArtHallResult result = artHallUpdateService.update(command);
 
-    return ResponseEntity.ok(
-        ApiResponse.success(ArtHallUpdateResponse.from(result), "아트홀 정보가 수정되었습니다."));
+    return ApiResponse.success(ArtHallUpdateResponse.from(result), "아트홀 정보가 수정되었습니다.");
   }
 
   @Operation(summary = "아트홀 삭제", description = "아트홀을 소프트 삭제합니다.")
   @DeleteMapping("/{id}")
-  public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+  public ApiResponse<Void> delete(@PathVariable Long id) {
     artHallDeleteService.delete(id, "SYSTEM");
-    return ResponseEntity.ok(ApiResponse.successWithMessage("아트홀이 삭제되었습니다."));
+    return ApiResponse.successWithMessage("아트홀이 삭제되었습니다.");
   }
 
   @Operation(summary = "아트홀 상태 변경", description = "아트홀 상태를 ACTIVE 또는 INACTIVE 로 변경합니다.")
   @PostMapping("/{id}/status")
-  public ResponseEntity<ApiResponse<ArtHallStatusUpdateResponse>> updateStatus(
+  public ApiResponse<ArtHallStatusUpdateResponse> updateStatus(
       @PathVariable Long id, @Valid @RequestBody ArtHallStatusUpdateRequest request) {
     ArtHallStatusUpdateCommand command = request.toCommand(id);
     ArtHallResult result = artHallStatusUpdateService.updateStatus(command);
 
-    return ResponseEntity.ok(
-        ApiResponse.success(ArtHallStatusUpdateResponse.from(result), "아트홀 상태가 변경되었습니다."));
+    return ApiResponse.success(ArtHallStatusUpdateResponse.from(result), "아트홀 상태가 변경되었습니다.");
   }
 }
