@@ -12,8 +12,7 @@ public record StageDetailResponse(
     LocalDateTime createdAt,
     String createdBy,
     LocalDateTime updatedAt,
-    String updatedBy
-) {
+    String updatedBy) {
 
   public static StageDetailResponse from(Stage stage) {
     return new StageDetailResponse(
@@ -24,7 +23,6 @@ public record StageDetailResponse(
         stage.getCreatedAt(),
         stage.getCreatedBy(),
         stage.getUpdatedAt(),
-        stage.getUpdatedBy()
-    );
+        stage.getUpdatedBy());
   }
 }
