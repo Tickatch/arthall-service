@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    # pgvector 포함 이미지
+    image: ankane/pgvector:latest
     environment:
       - POSTGRES_DB=tickatch
       - POSTGRES_USER=tickatch
