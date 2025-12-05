@@ -4,6 +4,7 @@ import com.tickatch.arthallservice.arthall.application.service.ArtHallQueryServi
 import com.tickatch.arthallservice.arthall.domain.ArtHall;
 import com.tickatch.arthallservice.arthall.presentation.dto.response.ArtHallDetailResponse;
 import com.tickatch.arthallservice.arthall.presentation.dto.response.ArtHallListResponse;
+import io.github.tickatch.common.api.ApiResponse;
 import io.github.tickatch.common.api.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,9 @@ public class ArtHallQueryApi {
 
   @Operation(summary = "아트홀 상세 조회", description = "아트홀을 상세 조회합니다.")
   @GetMapping("/{id}")
-  public ArtHallDetailResponse getDetail(@PathVariable Long id) {
+  public ApiResponse<ArtHallDetailResponse> getDetail(@PathVariable Long id) {
     ArtHall artHall = artHallQueryService.getArtHallDetail(id);
-    return ArtHallDetailResponse.from(artHall);
+    return ApiResponse.success(ArtHallDetailResponse.from(artHall));
   }
 
   @Operation(
@@ -40,10 +41,11 @@ public class ArtHallQueryApi {
               최신 생성순(createdAt DESC)으로 정렬하여 반환합니다.
               """)
   @GetMapping
-  public PageResponse<ArtHallListResponse> getArtHalls(
+  public ApiResponse<PageResponse<ArtHallListResponse>> getArtHalls(
       @RequestParam(required = false) String keyword, Pageable pageable) {
+
     Page<ArtHall> page = artHallQueryService.getArtHallList(keyword, pageable);
 
-    return PageResponse.from(page, ArtHallListResponse::from);
+    return ApiResponse.success(PageResponse.from(page, ArtHallListResponse::from));
   }
 }
