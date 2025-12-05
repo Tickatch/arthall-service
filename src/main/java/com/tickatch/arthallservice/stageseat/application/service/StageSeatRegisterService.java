@@ -1,5 +1,7 @@
 package com.tickatch.arthallservice.stageseat.application.service;
 
+import com.tickatch.arthallservice.stage.domain.Stage;
+import com.tickatch.arthallservice.stage.domain.repository.StageRepository;
 import com.tickatch.arthallservice.stageseat.application.dto.StageSeatRegisterCommand;
 import com.tickatch.arthallservice.stageseat.application.dto.StageSeatResult;
 import com.tickatch.arthallservice.stageseat.domain.StageSeat;
@@ -22,9 +24,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class StageSeatRegisterService {
 
   private final StageSeatRepository stageSeatRepository;
+  private final StageRepository stageRepository;
 
   @Transactional
   public List<StageSeatResult> registerAll(List<StageSeatRegisterCommand> commands) {
+
+    if (commands.isEmpty()) {
+      return List.of();
+    }
+
+    Long stageId = commands.getFirst().stageId();
+
+    // 0) 스테이지 상태 검증 (ACTIVE만 가능)
+    validateStageIsActive(stageId);
 
     // 1) 요청 내부 seatNumber 중복 검사
     validateDuplicateSeatInRequest(commands);
@@ -40,6 +52,19 @@ public class StageSeatRegisterService {
     }
 
     return results;
+  }
+
+  private void validateStageIsActive(Long stageId) {
+
+    Stage stage =
+        stageRepository
+            .findByStageIdAndDeletedAtIsNull(stageId)
+            .orElseThrow(
+                () -> new BusinessException(StageSeatErrorCode.STAGE_NOT_FOUND_FOR_SEAT_OPERATION));
+
+    if (stage.isInactive()) {
+      throw new BusinessException(StageSeatErrorCode.STAGE_INACTIVE_FOR_SEAT_OPERATION);
+    }
   }
 
   private StageSeatResult register(StageSeatRegisterCommand command) {
