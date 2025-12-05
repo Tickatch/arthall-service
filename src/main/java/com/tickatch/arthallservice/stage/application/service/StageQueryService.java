@@ -35,7 +35,7 @@ public class StageQueryService {
   }
 
   @Transactional(readOnly = true)
-  public Stage getActiveStage(Long stageId) {
+  public void getActiveStage(Long stageId) {
 
     Stage stage =
         stageQueryRepository
@@ -45,7 +45,5 @@ public class StageQueryService {
     if (stage.isInactive()) {
       throw new BusinessException(StageErrorCode.STAGE_INACTIVE);
     }
-
-    return stage;
   }
 }
