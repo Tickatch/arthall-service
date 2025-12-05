@@ -1,7 +1,6 @@
 package com.tickatch.arthallservice.stageseat.application.service;
 
-import com.tickatch.arthallservice.stage.domain.Stage;
-import com.tickatch.arthallservice.stage.domain.repository.StageRepository;
+import com.tickatch.arthallservice.stage.application.service.StageQueryService;
 import com.tickatch.arthallservice.stageseat.application.dto.StageSeatResult;
 import com.tickatch.arthallservice.stageseat.application.dto.StageSeatStatusUpdateCommand;
 import com.tickatch.arthallservice.stageseat.domain.StageSeat;
@@ -20,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StageSeatStatusUpdateService {
 
   private final StageSeatRepository stageSeatRepository;
-  private final StageRepository stageRepository;
+  private final StageQueryService stageQueryService;
 
   @Transactional
   public List<StageSeatResult> updateStatus(StageSeatStatusUpdateCommand command) {
@@ -29,7 +28,7 @@ public class StageSeatStatusUpdateService {
 
     validateSeatCount(seats, command.seatIds());
 
-    validateStage(seats.getFirst().getStageId());
+    validateStageIsActive(seats.getFirst().getStageId());
 
     return changeAllStatuses(seats, command.status());
   }
@@ -47,17 +46,8 @@ public class StageSeatStatusUpdateService {
   }
 
   // 3. 스테이지 검증
-  private void validateStage(Long stageId) {
-
-    Stage stage =
-        stageRepository
-            .findByStageIdAndDeletedAtIsNull(stageId)
-            .orElseThrow(
-                () -> new BusinessException(StageSeatErrorCode.STAGE_NOT_FOUND_FOR_SEAT_OPERATION));
-
-    if (stage.isInactive()) {
-      throw new BusinessException(StageSeatErrorCode.STAGE_INACTIVE_FOR_SEAT_OPERATION);
-    }
+  private void validateStageIsActive(Long stageId) {
+    stageQueryService.getActiveStage(stageId);
   }
 
   // 4. 모든 좌석 상태 변경

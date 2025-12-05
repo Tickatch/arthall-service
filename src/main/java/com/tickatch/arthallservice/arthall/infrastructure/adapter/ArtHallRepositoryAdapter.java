@@ -1,4 +1,4 @@
-package com.tickatch.arthallservice.arthall.infrastructure;
+package com.tickatch.arthallservice.arthall.infrastructure.adapter;
 
 import com.tickatch.arthallservice.arthall.domain.ArtHall;
 import com.tickatch.arthallservice.arthall.domain.repository.ArtHallRepository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ArtHallRepositoryImpl implements ArtHallRepository {
+public class ArtHallRepositoryAdapter implements ArtHallRepository {
 
   private final ArtHallJpaRepository jpaRepository;
 

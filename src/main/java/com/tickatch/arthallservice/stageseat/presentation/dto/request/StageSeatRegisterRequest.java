@@ -6,7 +6,7 @@ import com.tickatch.arthallservice.stageseat.domain.StageSeatStatus;
 public record StageSeatRegisterRequest(
     String seatNumber, StageSeatStatus status, int row, int col, float vectorX, float vectorY) {
 
-  public StageSeatRegisterCommand toCommand(Long stageId) {
-    return new StageSeatRegisterCommand(stageId, seatNumber, status, row, col, vectorX, vectorY);
+  public StageSeatRegisterCommand toCommand() {
+    return new StageSeatRegisterCommand(seatNumber, status, row, col, vectorX, vectorY);
   }
 }
