@@ -16,8 +16,8 @@ public class StageSeatListService {
 
   public Page<StageSeatListResult> getList(Long stageId, String keyword, Pageable pageable) {
 
-    Page<StageSeat> page = stageSeatQueryRepository.findByStageIdAndKeyword(stageId, keyword,
-        pageable);
+    Page<StageSeat> page =
+        stageSeatQueryRepository.findByStageIdAndKeyword(stageId, keyword, pageable);
 
     return page.map(StageSeatListResult::from);
   }

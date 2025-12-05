@@ -10,5 +10,4 @@ public interface StageSeatQueryRepository {
   Optional<StageSeat> findDetailByStageSeatId(Long seatId);
 
   Page<StageSeat> findByStageIdAndKeyword(Long stageId, String keyword, Pageable pageable);
-
 }

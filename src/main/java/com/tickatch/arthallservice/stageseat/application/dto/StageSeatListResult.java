@@ -4,13 +4,7 @@ import com.tickatch.arthallservice.stageseat.domain.StageSeat;
 import java.util.Arrays;
 
 public record StageSeatListResult(
-    Long stageSeatId,
-    String seatNumber,
-    String status,
-    Integer row,
-    Integer col,
-    float[] vector
-) {
+    Long stageSeatId, String seatNumber, String status, Integer row, Integer col, float[] vector) {
 
   public StageSeatListResult {
     if (vector != null) {
@@ -32,7 +26,6 @@ public record StageSeatListResult(
         seat.getStatus().name(),
         seat.getLocation().getRow(),
         seat.getLocation().getCol(),
-        vector
-    );
+        vector);
   }
 }

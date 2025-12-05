@@ -24,10 +24,7 @@ public class StageSeatQueryRepositoryAdapter implements StageSeatQueryRepository
     StageSeat result =
         queryFactory
             .selectFrom(stageSeat)
-            .where(
-                stageSeat.stageSeatId.eq(stageSeatId),
-                stageSeat.deletedAt.isNull()
-            )
+            .where(stageSeat.stageSeatId.eq(stageSeatId), stageSeat.deletedAt.isNull())
             .fetchOne();
 
     return Optional.ofNullable(result);
@@ -42,8 +39,7 @@ public class StageSeatQueryRepositoryAdapter implements StageSeatQueryRepository
             .where(
                 stageSeat.stageId.eq(stageId),
                 stageSeat.deletedAt.isNull(),
-                keyword == null ? null : stageSeat.seatNumber.value.containsIgnoreCase(keyword)
-            )
+                keyword == null ? null : stageSeat.seatNumber.value.containsIgnoreCase(keyword))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .orderBy(stageSeat.createdAt.desc())
@@ -56,8 +52,7 @@ public class StageSeatQueryRepositoryAdapter implements StageSeatQueryRepository
             .where(
                 stageSeat.stageId.eq(stageId),
                 stageSeat.deletedAt.isNull(),
-                keyword == null ? null : stageSeat.seatNumber.value.containsIgnoreCase(keyword)
-            )
+                keyword == null ? null : stageSeat.seatNumber.value.containsIgnoreCase(keyword))
             .fetchOne();
 
     long total = (count == null) ? 0L : count;

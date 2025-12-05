@@ -25,10 +25,7 @@ public class StageSeatQueryApi {
   private final StageSeatDetailService stageSeatDetailService;
   private final StageSeatListService stageSeatListService;
 
-  @Operation(
-      summary = "좌석 상세 조회",
-      description = "stageSeatId로 특정 좌석을 조회합니다. 삭제된 좌석은 조회되지 않습니다."
-  )
+  @Operation(summary = "좌석 상세 조회", description = "stageSeatId로 특정 좌석을 조회합니다. 삭제된 좌석은 조회되지 않습니다.")
   @GetMapping("/stage-seats/{stageSeatId}")
   public ApiResponse<?> getStageSeatDetail(@PathVariable Long stageSeatId) {
 
@@ -39,21 +36,15 @@ public class StageSeatQueryApi {
 
   @Operation(
       summary = "좌석 목록 조회",
-      description = "특정 스테이지(stageId)에 속한 좌석 목록을 조회합니다. "
-          + "키워드 검색(좌석번호)과 페이징을 지원하며, 삭제된 좌석은 제외됩니다."
-  )
+      description =
+          "특정 스테이지(stageId)에 속한 좌석 목록을 조회합니다. " + "키워드 검색(좌석번호)과 페이징을 지원하며, 삭제된 좌석은 제외됩니다.")
   @GetMapping("/stages/{stageId}/stage-seats")
   public ApiResponse<?> getStageSeatList(
       @PathVariable Long stageId,
       @RequestParam(required = false) String keyword,
-      Pageable pageable
-  ) {
+      Pageable pageable) {
     Page<StageSeatListResult> result = stageSeatListService.getList(stageId, keyword, pageable);
 
-    return ApiResponse.success(
-        StageSeatListResponse.from(result),
-        "좌석 목록 조회가 완료되었습니다."
-    );
+    return ApiResponse.success(StageSeatListResponse.from(result), "좌석 목록 조회가 완료되었습니다.");
   }
-
 }
