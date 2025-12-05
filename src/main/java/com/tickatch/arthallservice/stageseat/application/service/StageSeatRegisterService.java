@@ -1,7 +1,6 @@
 package com.tickatch.arthallservice.stageseat.application.service;
 
-import com.tickatch.arthallservice.stage.domain.Stage;
-import com.tickatch.arthallservice.stage.domain.repository.StageRepository;
+import com.tickatch.arthallservice.stage.application.service.StageQueryService;
 import com.tickatch.arthallservice.stageseat.application.dto.StageSeatRegisterCommand;
 import com.tickatch.arthallservice.stageseat.application.dto.StageSeatResult;
 import com.tickatch.arthallservice.stageseat.domain.StageSeat;
@@ -24,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StageSeatRegisterService {
 
   private final StageSeatRepository stageSeatRepository;
-  private final StageRepository stageRepository;
+  private final StageQueryService stageQueryService;
 
   @Transactional
   public List<StageSeatResult> registerAll(List<StageSeatRegisterCommand> commands) {
@@ -55,16 +54,7 @@ public class StageSeatRegisterService {
   }
 
   private void validateStageIsActive(Long stageId) {
-
-    Stage stage =
-        stageRepository
-            .findByStageIdAndDeletedAtIsNull(stageId)
-            .orElseThrow(
-                () -> new BusinessException(StageSeatErrorCode.STAGE_NOT_FOUND_FOR_SEAT_OPERATION));
-
-    if (stage.isInactive()) {
-      throw new BusinessException(StageSeatErrorCode.STAGE_INACTIVE_FOR_SEAT_OPERATION);
-    }
+    stageQueryService.getActiveStage(stageId);
   }
 
   private StageSeatResult register(StageSeatRegisterCommand command) {

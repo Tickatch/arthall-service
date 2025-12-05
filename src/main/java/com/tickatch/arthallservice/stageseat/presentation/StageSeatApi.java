@@ -68,7 +68,7 @@ public class StageSeatApi {
   public ApiResponse<List<StageSeatStatusUpdateResponse>> updateSeatStatus(
       @Valid @RequestBody StageSeatStatusUpdateRequest request) {
 
-    var results = stageSeatStatusUpdateService.updateStatus(request.toCommand());
+    List<StageSeatResult> results = stageSeatStatusUpdateService.updateStatus(request.toCommand());
 
     return ApiResponse.success(
         results.stream().map(StageSeatStatusUpdateResponse::from).toList(), "좌석 상태가 수정되었습니다.");

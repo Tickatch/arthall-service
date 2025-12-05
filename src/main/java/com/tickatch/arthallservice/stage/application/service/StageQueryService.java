@@ -33,4 +33,19 @@ public class StageQueryService {
   public Page<Stage> getStageList(Long artHallId, String keyword, Pageable pageable) {
     return stageQueryRepository.findByArtHallIdAndKeyword(artHallId, keyword, pageable);
   }
+
+  @Transactional(readOnly = true)
+  public Stage getActiveStage(Long stageId) {
+
+    Stage stage =
+        stageQueryRepository
+            .findDetail(stageId)
+            .orElseThrow(() -> new BusinessException(StageErrorCode.STAGE_NOT_FOUND));
+
+    if (stage.isInactive()) {
+      throw new BusinessException(StageErrorCode.STAGE_INACTIVE);
+    }
+
+    return stage;
+  }
 }
