@@ -1,4 +1,4 @@
-package com.tickatch.arthallservice.stage.infrastructure.persistence;
+package com.tickatch.arthallservice.stage.infrastructure.adapter;
 
 import com.tickatch.arthallservice.stage.domain.Stage;
 import com.tickatch.arthallservice.stage.domain.repository.StageRepository;

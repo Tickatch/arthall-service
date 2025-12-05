@@ -1,4 +1,4 @@
-package com.tickatch.arthallservice.arthall.infrastructure;
+package com.tickatch.arthallservice.arthall.infrastructure.adapter;
 
 import com.tickatch.arthallservice.arthall.domain.ArtHall;
 import com.tickatch.arthallservice.arthall.domain.exception.ArtHallErrorCode;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ArtHallFinderImpl implements ArtHallFinder {
+public class ArtHallFinderAdapter implements ArtHallFinder {
 
   private final ArtHallQuery artHallQuery;
 
