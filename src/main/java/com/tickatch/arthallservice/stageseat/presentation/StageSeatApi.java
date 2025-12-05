@@ -52,11 +52,11 @@ public class StageSeatApi {
   }
 
   @Operation(summary = "좌석 위치 수정", description = "좌석의 row, col, vector 값을 수정합니다.")
-  @PutMapping("/stages/stage-seats")
+  @PutMapping("/stages/stage-seats/{seatId}")
   public ApiResponse<StageSeatUpdateResponse> updateSeatLocation(
-      @Valid @RequestBody StageSeatUpdateRequest request) {
+      @PathVariable Long seatId, @Valid @RequestBody StageSeatUpdateRequest request) {
 
-    StageSeatUpdateCommand command = request.toCommand();
+    StageSeatUpdateCommand command = request.toCommand(seatId);
 
     return ApiResponse.success(
         StageSeatUpdateResponse.from(stageSeatUpdateService.update(command)), "좌석 위치가 수정되었습니다.");
