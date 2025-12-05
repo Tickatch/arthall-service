@@ -15,4 +15,6 @@ public interface StageSeatRepository extends JpaRepository<StageSeat, Long> {
       Long stageId, int row, int col);
 
   List<StageSeat> findAllByStageSeatIdInAndDeletedAtIsNull(List<Long> stageSeatIds);
+
+  Optional<StageSeat> findByStageSeatIdAndDeletedAtIsNull(Long id);
 }
