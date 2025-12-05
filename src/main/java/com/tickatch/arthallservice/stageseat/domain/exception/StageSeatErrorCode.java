@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum StageSeatErrorCode implements ErrorCode {
+  SEAT_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "SEAT_NOT_FOUND"),
   INVALID_ROW(HttpStatus.UNPROCESSABLE_ENTITY.value(), "INVALID_STAGE_SEAT_ROW"),
   INVALID_COL(HttpStatus.UNPROCESSABLE_ENTITY.value(), "INVALID_STAGE_SEAT_COL"),
 
@@ -17,7 +18,9 @@ public enum StageSeatErrorCode implements ErrorCode {
 
   INVALID_VECTOR(HttpStatus.UNPROCESSABLE_ENTITY.value(), "INVALID_STAGE_SEAT_VECTOR"),
   INVALID_VECTOR_LENGTH(
-      HttpStatus.UNPROCESSABLE_ENTITY.value(), "INVALID_STAGE_SEAT_VECTOR_LENGTH");
+      HttpStatus.UNPROCESSABLE_ENTITY.value(), "INVALID_STAGE_SEAT_VECTOR_LENGTH"),
+  SEATNUMBER_ALREADY_EXISTS(HttpStatus.CONFLICT.value(), "SEATNUMBER_ALREADY_EXISTS"),
+  ROW_COL_ALREADY_EXISTS(HttpStatus.CONFLICT.value(), "ROW_COL_ALREADY_EXISTS");
 
   private final int status;
   private final String code;
