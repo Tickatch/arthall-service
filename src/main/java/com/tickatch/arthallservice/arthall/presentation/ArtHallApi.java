@@ -42,8 +42,7 @@ public class ArtHallApi {
   public ApiResponse<ArtHallRegisterResponse> register(
       @Valid @RequestBody ArtHallRegisterRequest request) {
     ArtHallResult result = artHallRegisterService.register(request.toCommand());
-    return
-        ApiResponse.success(ArtHallRegisterResponse.from(result), "아트홀이 등록되었습니다.");
+    return ApiResponse.success(ArtHallRegisterResponse.from(result), "아트홀이 등록되었습니다.");
   }
 
   @Operation(summary = "아트홀 수정", description = "아트홀 정보를 수정합니다.")

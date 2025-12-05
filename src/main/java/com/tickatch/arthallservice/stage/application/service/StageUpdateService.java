@@ -31,9 +31,10 @@ public class StageUpdateService {
 
   private Stage findActiveStage(Long stageId) {
 
-    Stage stage = stageRepository
-        .findByStageIdAndDeletedAtIsNull(stageId)
-        .orElseThrow(() -> new BusinessException(StageErrorCode.STAGE_NOT_FOUND));
+    Stage stage =
+        stageRepository
+            .findByStageIdAndDeletedAtIsNull(stageId)
+            .orElseThrow(() -> new BusinessException(StageErrorCode.STAGE_NOT_FOUND));
 
     if (stage.isInactive()) {
       throw new BusinessException(StageErrorCode.STAGE_INACTIVE);
