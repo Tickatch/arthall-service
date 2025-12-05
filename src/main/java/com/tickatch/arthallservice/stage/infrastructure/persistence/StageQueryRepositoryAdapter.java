@@ -31,6 +31,14 @@ public class StageQueryRepositoryAdapter implements StageQueryRepository {
   }
 
   @Override
+  public List<Stage> findByArtHallId(Long artHallId) {
+    return queryFactory
+        .selectFrom(stage)
+        .where(stage.artHallId.eq(artHallId), stage.deletedAt.isNull())
+        .fetch();
+  }
+
+  @Override
   public Page<Stage> findByArtHallIdAndKeyword(Long artHallId, String keyword, Pageable pageable) {
 
     List<Stage> content =
