@@ -4,6 +4,7 @@ import com.tickatch.arthallservice.stage.domain.Stage;
 import com.tickatch.arthallservice.stage.domain.exception.StageErrorCode;
 import com.tickatch.arthallservice.stage.domain.repository.StageQueryRepository;
 import io.github.tickatch.common.error.BusinessException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,11 @@ public class StageQueryService {
     return stageQueryRepository
         .findDetail(stageId)
         .orElseThrow(() -> new BusinessException(StageErrorCode.STAGE_NOT_FOUND));
+  }
+
+  @Transactional(readOnly = true)
+  public List<Stage> getStageListBy(Long artHallId) {
+    return stageQueryRepository.findByArtHallId(artHallId);
   }
 
   @Transactional(readOnly = true)
