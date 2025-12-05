@@ -39,31 +39,21 @@ public class StageApi {
   @Operation(summary = "스테이지 등록", description = "특정 아트홀에 새로운 스테이지를 생성합니다.")
   @PostMapping("/{artHallId}/stages")
   public ApiResponse<StageRegisterResponse> register(
-      @PathVariable Long artHallId,
-      @Valid @RequestBody StageRegisterRequest request
-  ) {
+      @PathVariable Long artHallId, @Valid @RequestBody StageRegisterRequest request) {
     StageRegisterCommand command = request.toCommand(artHallId);
     StageResult result = stageRegisterService.register(command);
 
-    return ApiResponse.success(
-        StageRegisterResponse.from(result),
-        "스테이지가 등록되었습니다."
-    );
+    return ApiResponse.success(StageRegisterResponse.from(result), "스테이지가 등록되었습니다.");
   }
 
   @Operation(summary = "스테이지 수정", description = "스테이지 이름과 상태를 수정합니다.")
   @PutMapping("/stages/{stageId}")
   public ApiResponse<StageUpdateResponse> update(
-      @PathVariable Long stageId,
-      @Valid @RequestBody StageUpdateRequest request
-  ) {
+      @PathVariable Long stageId, @Valid @RequestBody StageUpdateRequest request) {
     StageUpdateCommand command = request.toCommand(stageId);
     StageResult result = stageUpdateService.update(command);
 
-    return ApiResponse.success(
-        StageUpdateResponse.from(result),
-        "스테이지 정보가 수정되었습니다."
-    );
+    return ApiResponse.success(StageUpdateResponse.from(result), "스테이지 정보가 수정되었습니다.");
   }
 
   @Operation(summary = "스테이지 삭제", description = "스테이지를 소프트 삭제합니다.")
@@ -78,15 +68,10 @@ public class StageApi {
   @Operation(summary = "스테이지 상태 변경", description = "스테이지 상태를 ACTIVE 또는 INACTIVE 로 변경합니다.")
   @PostMapping("/stages/{stageId}/status")
   public ApiResponse<StageStatusUpdateResponse> updateStatus(
-      @PathVariable Long stageId,
-      @Valid @RequestBody StageStatusUpdateRequest request
-  ) {
+      @PathVariable Long stageId, @Valid @RequestBody StageStatusUpdateRequest request) {
     StageStatusUpdateCommand command = request.toCommand(stageId);
     StageResult result = stageStatusUpdateService.updateStatus(command);
 
-    return ApiResponse.success(
-        StageStatusUpdateResponse.from(result),
-        "스테이지 상태가 변경되었습니다."
-    );
+    return ApiResponse.success(StageStatusUpdateResponse.from(result), "스테이지 상태가 변경되었습니다.");
   }
 }
