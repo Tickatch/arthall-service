@@ -3,14 +3,12 @@ package com.tickatch.arthallservice.stageseat.infrastructure.adapter;
 import static com.tickatch.arthallservice.stageseat.domain.QStageSeat.stageSeat;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.tickatch.arthallservice.stageseat.domain.QStageSeat;
 import com.tickatch.arthallservice.stageseat.domain.StageSeat;
 import com.tickatch.arthallservice.stageseat.domain.repository.StageSeatQueryRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,32 +29,30 @@ public class StageSeatQueryRepositoryAdapter implements StageSeatQueryRepository
   }
 
   @Override
-  public Page<StageSeat> findByStageIdAndKeyword(Long stageId, String keyword, Pageable pageable) {
+  public List<StageSeat> findByStageIdAndSeatNumberLike(Long stageId, String seatNumber) {
 
-    List<StageSeat> content =
-        queryFactory
-            .selectFrom(stageSeat)
-            .where(
-                stageSeat.stageId.eq(stageId),
-                stageSeat.deletedAt.isNull(),
-                keyword == null ? null : stageSeat.seatNumber.value.containsIgnoreCase(keyword))
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .orderBy(stageSeat.createdAt.desc())
-            .fetch();
+    QStageSeat stageSeat = QStageSeat.stageSeat;
 
-    Long count =
-        queryFactory
-            .select(stageSeat.count())
-            .from(stageSeat)
-            .where(
-                stageSeat.stageId.eq(stageId),
-                stageSeat.deletedAt.isNull(),
-                keyword == null ? null : stageSeat.seatNumber.value.containsIgnoreCase(keyword))
-            .fetchOne();
+    return queryFactory
+        .selectFrom(stageSeat)
+        .where(
+            stageSeat.stageId.eq(stageId),
+            stageSeat.deletedAt.isNull(),
+            seatNumber != null && !seatNumber.isBlank()
+                ? stageSeat.seatNumber.value.like("%" + seatNumber + "%")
+                : null)
+        .fetch();
+  }
 
-    long total = (count == null) ? 0L : count;
+  // StageId로 삭제되지 않은 StageSeatId 전체 조회
+  @Override
+  public List<StageSeat> findAllByStageId(Long stageId) {
 
-    return new PageImpl<>(content, pageable, total);
+    QStageSeat stageSeat = QStageSeat.stageSeat;
+
+    return queryFactory
+        .selectFrom(stageSeat)
+        .where(stageSeat.stageId.eq(stageId), stageSeat.deletedAt.isNull())
+        .fetch();
   }
 }

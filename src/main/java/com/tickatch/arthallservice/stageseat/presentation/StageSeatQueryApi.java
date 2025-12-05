@@ -8,9 +8,8 @@ import com.tickatch.arthallservice.stageseat.presentation.dto.response.StageSeat
 import com.tickatch.arthallservice.stageseat.presentation.dto.response.StageSeatListResponse;
 import io.github.tickatch.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,14 +36,12 @@ public class StageSeatQueryApi {
   @Operation(
       summary = "좌석 목록 조회",
       description =
-          "특정 스테이지(stageId)에 속한 좌석 목록을 조회합니다. " + "키워드 검색(좌석번호)과 페이징을 지원하며, 삭제된 좌석은 제외됩니다.")
+          "특정 스테이지(stageId)에 속한 좌석 목록을 조회합니다. 좌석번호(seatNumber) 기준 부분 검색을 지원하며, 삭제된 좌석은 제외됩니다.")
   @GetMapping("/stages/{stageId}/stage-seats")
   public ApiResponse<?> getStageSeatList(
-      @PathVariable Long stageId,
-      @RequestParam(required = false) String keyword,
-      Pageable pageable) {
-    Page<StageSeatListResult> result = stageSeatListService.getList(stageId, keyword, pageable);
+      @PathVariable Long stageId, @RequestParam(required = false) String seatNumber) {
+    List<StageSeatListResult> results = stageSeatListService.getList(stageId, seatNumber);
 
-    return ApiResponse.success(StageSeatListResponse.from(result), "좌석 목록 조회가 완료되었습니다.");
+    return ApiResponse.success(StageSeatListResponse.from(results), "좌석 목록 조회가 완료되었습니다.");
   }
 }
