@@ -26,13 +26,11 @@ public class StageSeatRegisterService {
   private final StageQueryService stageQueryService;
 
   @Transactional
-  public List<StageSeatResult> registerAll(List<StageSeatRegisterCommand> commands) {
+  public List<StageSeatResult> registerAll(Long stageId, List<StageSeatRegisterCommand> commands) {
 
     if (commands.isEmpty()) {
       return List.of();
     }
-
-    Long stageId = commands.getFirst().stageId();
 
     // 0) 스테이지 상태 검증 (ACTIVE만 가능)
     validateStageIsActive(stageId);
@@ -47,7 +45,7 @@ public class StageSeatRegisterService {
     List<StageSeatResult> results = new ArrayList<>();
 
     for (StageSeatRegisterCommand command : commands) {
-      results.add(register(command));
+      results.add(register(stageId, command));
     }
 
     return results;
@@ -57,16 +55,15 @@ public class StageSeatRegisterService {
     stageQueryService.getActiveStage(stageId);
   }
 
-  private StageSeatResult register(StageSeatRegisterCommand command) {
+  private StageSeatResult register(Long stageId, StageSeatRegisterCommand command) {
 
-    validateDuplicateSeat(command);
-    validateDuplicateLocation(command);
+    validateDuplicateSeat(stageId, command);
+    validateDuplicateLocation(stageId, command);
 
     VectorValue vector = VectorValue.of(command.vectorX(), command.vectorY());
     StageSeatLocation location = StageSeatLocation.of(command.row(), command.col(), vector);
 
-    StageSeat seat =
-        StageSeat.register(command.stageId(), command.seatNumber(), command.status(), location);
+    StageSeat seat = StageSeat.register(stageId, command.seatNumber(), command.status(), location);
 
     StageSeat saved = stageSeatRepository.save(seat);
 
@@ -83,7 +80,7 @@ public class StageSeatRegisterService {
     return List.of(values[0], values[1]);
   }
 
-  /** 요청 내부 seatNumber 중복 검사 */
+  // 요청 내부 seatNumber 중복 검사
   private void validateDuplicateSeatInRequest(List<StageSeatRegisterCommand> commands) {
 
     Set<String> seen = new HashSet<>();
@@ -95,7 +92,7 @@ public class StageSeatRegisterService {
     }
   }
 
-  /** 요청 내부 위치(row/col) 중복 검사 */
+  // 요청 내부 위치(row/col) 중복 검사
   private void validateDuplicateLocationInRequest(List<StageSeatRegisterCommand> commands) {
 
     Set<String> seen = new HashSet<>();
@@ -109,25 +106,25 @@ public class StageSeatRegisterService {
     }
   }
 
-  /** DB seatNumber 중복 검사 */
-  private void validateDuplicateSeat(StageSeatRegisterCommand command) {
+  // DB seatNumber 중복 검사
+  private void validateDuplicateSeat(Long stageId, StageSeatRegisterCommand command) {
 
     StageSeatNumber seatNumber = StageSeatNumber.of(command.seatNumber());
 
     stageSeatRepository
-        .findByStageIdAndSeatNumberAndDeletedAtIsNull(command.stageId(), seatNumber)
+        .findByStageIdAndSeatNumberAndDeletedAtIsNull(stageId, seatNumber)
         .ifPresent(
             existing -> {
               throw new BusinessException(StageSeatErrorCode.SEATNUMBER_ALREADY_EXISTS);
             });
   }
 
-  /** DB 위치(row/col) 중복 검사 */
-  private void validateDuplicateLocation(StageSeatRegisterCommand command) {
+  // DB 위치(row/col) 중복 검사
+  private void validateDuplicateLocation(Long stageId, StageSeatRegisterCommand command) {
 
     stageSeatRepository
         .findByStageIdAndLocationRowAndLocationColAndDeletedAtIsNull(
-            command.stageId(), command.row(), command.col())
+            stageId, command.row(), command.col())
         .ifPresent(
             existing -> {
               throw new BusinessException(StageSeatErrorCode.ROW_COL_ALREADY_EXISTS);
