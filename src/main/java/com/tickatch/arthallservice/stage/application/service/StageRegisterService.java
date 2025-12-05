@@ -23,21 +23,26 @@ public class StageRegisterService {
   @Transactional
   public StageResult register(StageRegisterCommand command) {
 
+    validateArtHallIsActive(command.artHallId());
+
+    StageName name = StageName.of(command.name());
+
+    Stage stage = Stage.register(command.artHallId(), name, command.status());
+
+    Stage saved = stageRepository.save(stage);
+
+    return StageResult.from(saved);
+  }
+
+  private void validateArtHallIsActive(Long artHallId) {
+
     ArtHall artHall =
         artHallRepository
-            .findByArtHallIdAndDeletedAtIsNull(command.artHallId())
+            .findByArtHallIdAndDeletedAtIsNull(artHallId)
             .orElseThrow(() -> new BusinessException(StageErrorCode.ARTHALL_NOT_FOUND_FOR_STAGE));
 
     if (artHall.isInactive()) {
       throw new BusinessException(StageErrorCode.ARTHALL_INACTIVE_FOR_STAGE);
     }
-
-    StageName name = StageName.of(command.name());
-
-    Stage stage = Stage.register(command.artHallId(), name.getValue(), command.status());
-
-    Stage saved = stageRepository.save(stage);
-
-    return StageResult.from(saved);
   }
 }

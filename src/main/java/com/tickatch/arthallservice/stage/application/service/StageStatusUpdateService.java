@@ -19,8 +19,10 @@ public class StageStatusUpdateService {
   @Transactional
   public StageResult updateStatus(StageStatusUpdateCommand command) {
 
-    Stage stage = stageRepository.findByStageIdAndDeletedAtIsNull(command.stageId())
-        .orElseThrow(() -> new BusinessException(StageErrorCode.STAGE_NOT_FOUND));
+    Stage stage =
+        stageRepository
+            .findByStageIdAndDeletedAtIsNull(command.stageId())
+            .orElseThrow(() -> new BusinessException(StageErrorCode.STAGE_NOT_FOUND));
 
     stage.changeStatus(command.status());
 
