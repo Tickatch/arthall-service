@@ -7,6 +7,7 @@ import com.tickatch.arthallservice.arthall.presentation.dto.response.ArtHallList
 import io.github.tickatch.common.api.ApiResponse;
 import io.github.tickatch.common.api.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/arthalls")
+@Tag(name = "ArtHall Query", description = "아트홀 조회 API")
 public class ArtHallQueryApi {
 
   private final ArtHallQueryService artHallQueryService;
