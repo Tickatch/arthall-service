@@ -1,5 +1,6 @@
 package com.tickatch.arthallservice.stage.application.service;
 
+import com.tickatch.arthallservice.arthall.application.service.ArtHallQueryService;
 import com.tickatch.arthallservice.stage.application.dto.StageResult;
 import com.tickatch.arthallservice.stage.application.dto.StageUpdateCommand;
 import com.tickatch.arthallservice.stage.domain.Stage;
@@ -16,11 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class StageUpdateService {
 
   private final StageRepository stageRepository;
+  private final ArtHallQueryService artHallQueryService;
 
   @Transactional
   public StageResult update(StageUpdateCommand command) {
 
     Stage stage = findActiveStage(command.stageId());
+
+    validateArtHallIsActive(stage.getArtHallId());
 
     StageName name = StageName.of(command.name());
 
@@ -41,5 +45,9 @@ public class StageUpdateService {
     }
 
     return stage;
+  }
+
+  private void validateArtHallIsActive(Long artHallId) {
+    artHallQueryService.getActiveArtHall(artHallId);
   }
 }

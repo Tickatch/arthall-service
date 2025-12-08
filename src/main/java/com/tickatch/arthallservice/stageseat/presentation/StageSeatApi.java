@@ -39,25 +39,24 @@ public class StageSeatApi {
 
   @Operation(summary = "좌석 등록", description = "해당 스테이지에 여러 좌석을 등록합니다.")
   @PostMapping("/stages/{stageId}/stage-seats")
-  public ApiResponse<?> register(
+  public ApiResponse<?> registerAll(
       @PathVariable Long stageId, @Valid @RequestBody List<StageSeatRegisterRequest> requests) {
 
     List<StageSeatRegisterCommand> commands =
-        requests.stream().map(req -> req.toCommand(stageId)).toList();
+        requests.stream().map(StageSeatRegisterRequest::toCommand).toList();
 
-    List<StageSeatResult> results = stageSeatRegisterService.registerAll(commands);
+    List<StageSeatResult> results = stageSeatRegisterService.registerAll(stageId, commands);
 
     return ApiResponse.success(
-        results.stream().map(StageSeatRegisterResponse::from).toList(),
-        results.size() + "개의 좌석이 등록되었습니다.");
+        results.stream().map(StageSeatRegisterResponse::from).toList(), "좌석이 등록되었습니다.");
   }
 
   @Operation(summary = "좌석 위치 수정", description = "좌석의 row, col, vector 값을 수정합니다.")
-  @PutMapping("/stages/stage-seats")
+  @PutMapping("/stages/stage-seats/{seatId}")
   public ApiResponse<StageSeatUpdateResponse> updateSeatLocation(
-      @Valid @RequestBody StageSeatUpdateRequest request) {
+      @PathVariable Long seatId, @Valid @RequestBody StageSeatUpdateRequest request) {
 
-    StageSeatUpdateCommand command = request.toCommand();
+    StageSeatUpdateCommand command = request.toCommand(seatId);
 
     return ApiResponse.success(
         StageSeatUpdateResponse.from(stageSeatUpdateService.update(command)), "좌석 위치가 수정되었습니다.");
@@ -68,7 +67,7 @@ public class StageSeatApi {
   public ApiResponse<List<StageSeatStatusUpdateResponse>> updateSeatStatus(
       @Valid @RequestBody StageSeatStatusUpdateRequest request) {
 
-    var results = stageSeatStatusUpdateService.updateStatus(request.toCommand());
+    List<StageSeatResult> results = stageSeatStatusUpdateService.updateStatus(request.toCommand());
 
     return ApiResponse.success(
         results.stream().map(StageSeatStatusUpdateResponse::from).toList(), "좌석 상태가 수정되었습니다.");
