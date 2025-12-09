@@ -7,6 +7,7 @@ import com.tickatch.arthallservice.stage.presentation.dto.response.StageListResp
 import io.github.tickatch.common.api.ApiResponse;
 import io.github.tickatch.common.api.PageResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/arthalls")
 @RequiredArgsConstructor
+@Tag(name = "Stage Query", description = "스테이지 조회 API")
 public class StageQueryApi {
 
   private final StageQueryService stageQueryService;

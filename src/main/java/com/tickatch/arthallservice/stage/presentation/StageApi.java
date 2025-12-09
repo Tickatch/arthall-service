@@ -16,6 +16,7 @@ import com.tickatch.arthallservice.stage.presentation.dto.response.StageStatusUp
 import com.tickatch.arthallservice.stage.presentation.dto.response.StageUpdateResponse;
 import io.github.tickatch.common.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/arthalls")
 @RequiredArgsConstructor
+@Tag(name = "Stage Command", description = "스테이지 관리 API")
 public class StageApi {
 
   private final StageRegisterService stageRegisterService;
