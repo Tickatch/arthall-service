@@ -1,4 +1,4 @@
-name: Build Product Service Image
+name: Build Arthall Service Image
 
 on:
   push:
