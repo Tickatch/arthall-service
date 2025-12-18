@@ -1,4 +1,4 @@
-package com.tickatch.arthallservice.arthall.infrastructure.messaging.config;
+package com.tickatch.arthallservice.global.config.RabbitMQ;
 
 import io.github.tickatch.common.util.JsonUtils;
 import org.springframework.amqp.core.ExchangeBuilder;

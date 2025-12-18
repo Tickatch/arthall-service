@@ -1,8 +1,8 @@
 package com.tickatch.arthallservice.arthall.infrastructure.log.publisher;
 
 import com.tickatch.arthallservice.arthall.application.port.ArtHallLogPort;
-import com.tickatch.arthallservice.arthall.infrastructure.messaging.config.RabbitMQConfig;
 import com.tickatch.arthallservice.arthall.infrastructure.messaging.event.ArtHallLogEvent;
+import com.tickatch.arthallservice.global.config.RabbitMQ.RabbitMQConfig;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
