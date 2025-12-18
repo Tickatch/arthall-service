@@ -40,7 +40,7 @@ public class StageStatusUpdateService {
 
       String actionType = newStatus == StageStatus.ACTIVE ? "ACTIVATED" : "INACTIVATED";
 
-      stageLogPort.publishStatusChanged(
+      stageLogPort.publishAction(
           stage.getStageId(),
           actionType,
           actor.actorType(),

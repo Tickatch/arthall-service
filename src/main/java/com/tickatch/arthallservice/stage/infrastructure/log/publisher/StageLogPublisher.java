@@ -16,7 +16,7 @@ public class StageLogPublisher implements StageLogPort {
   private final RabbitTemplate rabbitTemplate;
 
   @Override
-  public void publishStatusChanged(
+  public void publishAction(
       Long stageId,
       String actionType,
       String actorType,

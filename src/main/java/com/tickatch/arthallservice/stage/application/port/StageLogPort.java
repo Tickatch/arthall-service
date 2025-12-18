@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface StageLogPort {
 
-  void publishStatusChanged(
+  void publishAction(
       Long stageId,
       String actionType,
       String actorType,
