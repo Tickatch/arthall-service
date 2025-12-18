@@ -40,8 +40,7 @@ public class ArtHallRegisterService {
           "CREATED",
           actor.actorType(),
           actor.actorUserId(),
-          LocalDateTime.now()
-      );
+          LocalDateTime.now());
 
     } catch (Exception e) {
       log.warn("아트홀 생성 로그 저장 실패. artHallId={}", saved.getArtHallId(), e);
