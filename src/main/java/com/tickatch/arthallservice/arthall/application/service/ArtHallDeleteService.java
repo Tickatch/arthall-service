@@ -45,8 +45,7 @@ public class ArtHallDeleteService {
           "DELETED",
           actor.actorType(),
           actor.actorUserId(),
-          LocalDateTime.now()
-      );
+          LocalDateTime.now());
     } catch (Exception e) {
       log.warn("아트홀 삭제 로그 저장 실패. artHallId={}", artHall.getArtHallId(), e);
     }
