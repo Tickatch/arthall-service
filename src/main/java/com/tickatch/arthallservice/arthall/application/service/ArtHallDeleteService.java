@@ -36,6 +36,7 @@ public class ArtHallDeleteService {
 
     artHallRepository.delete(artHall);
 
+    // ===== 로그 이벤트 발행 =====
     try {
       ActorInfo actor = ActorExtractor.extract();
 
