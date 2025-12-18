@@ -37,7 +37,7 @@ public class ArtHallStatusUpdateService {
 
     artHall.changeStatus(newStatus);
 
-    // 로그 이벤트 발행
+    // ===== 로그 이벤트 발행 =====
     try {
       ActorInfo actor = ActorExtractor.extract();
 
@@ -51,7 +51,7 @@ public class ArtHallStatusUpdateService {
           LocalDateTime.now());
 
     } catch (Exception e) {
-      log.warn("아트홀 로그 저장 실패. artHallId={}", artHall.getArtHallId(), e);
+      log.warn("아트홀 상태 변경 로그 저장 실패. artHallId={}", artHall.getArtHallId(), e);
     }
 
     return new ArtHallResult(

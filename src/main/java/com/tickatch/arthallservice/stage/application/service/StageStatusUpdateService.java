@@ -34,7 +34,7 @@ public class StageStatusUpdateService {
     StageStatus newStatus = command.status();
     stage.changeStatus(newStatus);
 
-    // 로그 이벤트 발행
+    // ===== 로그 이벤트 발행 =====
     try {
       ActorExtractor.ActorInfo actor = ActorExtractor.extract();
 
@@ -48,7 +48,7 @@ public class StageStatusUpdateService {
           LocalDateTime.now());
 
     } catch (Exception e) {
-      log.warn("스테이지 로그 저장 실패. stageId={}", stage.getStageId(), e);
+      log.warn("스테이지 상태 변경 로그 저장 실패. stageId={}", stage.getStageId(), e);
     }
 
     return StageResult.from(stage);

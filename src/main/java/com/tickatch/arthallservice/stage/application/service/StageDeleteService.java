@@ -33,7 +33,7 @@ public class StageDeleteService {
 
     stage.softDelete(deletedBy);
 
-    // 로그 이벤트 발행
+    // ===== 로그 이벤트 발행 =====
     try {
       ActorExtractor.ActorInfo actor = ActorExtractor.extract();
 
@@ -45,7 +45,7 @@ public class StageDeleteService {
           java.time.LocalDateTime.now()
       );
     } catch (Exception e) {
-      log.warn("스테이지 로그 저장 실패. stageId={}", stage.getStageId(), e);
+      log.warn("스테이지 삭제 로그 저장 실패. stageId={}", stage.getStageId(), e);
     }
   }
 }
