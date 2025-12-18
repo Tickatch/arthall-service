@@ -35,7 +35,7 @@ public class ArtHallRegisterService {
     try {
       ActorInfo actor = ActorExtractor.extract();
 
-      artHallLogPort.publishStatusChanged(
+      artHallLogPort.publishAction(
           saved.getArtHallId(),
           "CREATED",
           actor.actorType(),

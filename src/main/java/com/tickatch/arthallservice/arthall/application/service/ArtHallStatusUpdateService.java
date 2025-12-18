@@ -43,7 +43,7 @@ public class ArtHallStatusUpdateService {
 
       String actionType = newStatus == ArtHallStatus.ACTIVE ? "ACTIVATED" : "INACTIVATED";
 
-      artHallLogPort.publishStatusChanged(
+      artHallLogPort.publishAction(
           artHall.getArtHallId(),
           actionType,
           actor.actorType(),

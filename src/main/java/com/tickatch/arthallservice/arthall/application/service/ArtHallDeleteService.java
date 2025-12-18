@@ -40,7 +40,7 @@ public class ArtHallDeleteService {
     try {
       ActorInfo actor = ActorExtractor.extract();
 
-      artHallLogPort.publishStatusChanged(
+      artHallLogPort.publishAction(
           artHall.getArtHallId(),
           "DELETED",
           actor.actorType(),

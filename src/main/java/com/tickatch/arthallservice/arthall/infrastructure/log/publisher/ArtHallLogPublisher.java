@@ -16,7 +16,7 @@ public class ArtHallLogPublisher implements ArtHallLogPort {
   private final RabbitTemplate rabbitTemplate;
 
   @Override
-  public void publishStatusChanged(
+  public void publishAction(
       Long artHallId,
       String actionType,
       String actorType,

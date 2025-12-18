@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface ArtHallLogPort {
 
-  void publishStatusChanged(
+  void publishAction(
       Long artHallId,
       String actionType,
       String actorType,
