@@ -42,8 +42,7 @@ public class StageDeleteService {
           "DELETED",
           actor.actorType(),
           actor.actorUserId(),
-          java.time.LocalDateTime.now()
-      );
+          java.time.LocalDateTime.now());
     } catch (Exception e) {
       log.warn("스테이지 삭제 로그 저장 실패. stageId={}", stage.getStageId(), e);
     }
