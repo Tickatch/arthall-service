@@ -583,7 +583,7 @@ spring:
     password: ${DB_PASSWORD}
   rabbitmq:
     host: localhost
-    port: 5672
+    port: 9092
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
 ```
